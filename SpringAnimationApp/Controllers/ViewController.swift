@@ -14,25 +14,19 @@ class ViewController: UIViewController {
     @IBOutlet var springAnimationView: SpringView!
     @IBOutlet var runButton: SpringButton!
     
-    @IBOutlet var presetLabel: UILabel!
-    @IBOutlet var curveLabel: UILabel!
-    @IBOutlet var forceLabel: UILabel!
-    @IBOutlet var durationLabel: UILabel!
-    @IBOutlet var delayLabel: UILabel!
-    
-    @IBOutlet var parametrsStackView: UIStackView!
+    @IBOutlet var parametrsLabel: UILabel!
     @IBOutlet var startLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        parametrsStackView?.isHidden = true
+        parametrsLabel?.isHidden = true
     }
 
     @IBAction func runSpringAnimation(_ sender: SpringButton) {
         
         startLabel.isHidden = true
-        parametrsStackView?.isHidden = false
+        parametrsLabel?.isHidden = false
         
         let animation = Animation.getAnimation(with: nextPreset)
         
@@ -43,12 +37,8 @@ class ViewController: UIViewController {
         springAnimationView.delay = CGFloat(animation.delay)
         springAnimationView.animate()
         
-        presetLabel.text = "preset: \(animation.preset)"
-        curveLabel.text = "curve: \(animation.curve)"
-        forceLabel.text = String(format: "force: %.2f", animation.force)
-        durationLabel.text = String(format: "duration: %.2f", animation.duration)
-        delayLabel.text = String(format: "delay: %.2f", animation.delay)
-        
+        parametrsLabel.text = animation.description
+               
         nextPreset = Animation.getPreset()
         runButton.setTitle("Run \(nextPreset)", for: .normal)
     }
